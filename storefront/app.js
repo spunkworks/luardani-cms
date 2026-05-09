@@ -36,15 +36,15 @@ const SHARE_TEXT = LOCALE === 'nl'
 const COPY = {
   nl: {
     title: 'Luardani - Moderne essentials met Marokkaanse roots',
-    description: 'Luardani is een modern accessoiresmerk rond Fatima’s Marokkaanse familienaam, met no-size lederwaren, zijde, sieraden en travel essentials.',
+    description: 'Luardani is een modern accessoiresmerk voor vrouwen rond Fatima’s Marokkaanse familienaam, met no-size lederwaren, zijde, sieraden en travel essentials.',
     navLegacy: 'Erfenis',
     navCollection: 'Collectie',
     navPhilosophy: 'Filosofie',
-    cart: 'Cart',
+    cart: 'Tas',
     announcement: 'Luardani - moderne no-size essentials',
     heroEyebrow: 'Luardani',
     heroTitle: 'Moderne essentials, geworteld in familie.',
-    heroTagline: 'Lederwaren, zijde, sieraden en travel essentials gevormd door Fatima’s Marokkaanse familienaam en gemaakt voor dagelijks gebruik.',
+    heroTagline: 'Lederwaren, zijde, sieraden en travel essentials voor vrouwen die houden van rustige stijl, warme materialen en dagelijks gemak.',
     shopCollection: 'Shop de collectie',
     roots: 'Onze roots',
     noteLabel: 'Kleine batches',
@@ -72,28 +72,29 @@ const COPY = {
     followRelease: 'Volg nieuwe ideeën, drops en favorieten.',
     familyOwned: 'Familie-eigendom',
     familyOwnedText: 'Gebouwd rond Fatima’s Marokkaanse familienaam.',
-    currentEdit: 'Current edit',
-    currentEditText: 'Twaalf no-size essentials in lederwaren, zijde, sieraden en travel.',
+    currentEdit: 'Huidige selectie',
+    currentEditText: 'Twaalf vrouwelijke no-size essentials in lederwaren, zijde, sieraden en travel.',
     lessWaste: 'Minder verspilling',
     lessWasteText: 'Vraag bepaalt wat in productie gaat.',
     privateInvitation: 'Deel Luardani',
     shareHeading: 'Stuur Luardani naar een vriend.',
-    shareText: 'Ken je iemand die houdt van clean accessories, warme materialen en social-first brands? Deel de collectie met ze.',
+    shareText: 'Ken je iemand die houdt van clean accessoires, warme materialen en een rustige stijl? Deel de collectie met haar.',
     shareButton: 'Deel Luardani',
     copyInvite: 'Kopieer uitnodiging',
     updates: 'Updates',
     newsletterTitle: 'Ontvang nieuwe drops, producttests en restock notes.',
     emailPlaceholder: 'E-mailadres',
     joinFamily: 'Word deel van de familie',
-    cartTitle: 'Jouw cart',
+    cartLabel: 'Jouw tas',
+    cartTitle: 'Jouw tas',
     total: 'Totaal',
-    checkout: 'Checkout',
+    checkout: 'Afrekenen',
     copyright: 'Alle rechten voorbehouden.',
     pieces: 'stukken',
     piece: 'stuk',
     ready: 'Klaar voor verzending',
     preorder: 'Pre-order',
-    conceptSample: 'Concept sample',
+    conceptSample: 'Concept',
     noSizeEdit: 'No-size edit',
     production: 'Productiecommitment',
     onDemand: 'Op aanvraag',
@@ -101,7 +102,7 @@ const COPY = {
     soldOut: 'Uitverkocht',
     details: 'Details',
     add: 'Toevoegen',
-    joinRun: 'Join run',
+    joinRun: 'Interesse',
     maison: 'Luardani',
     material: 'Materiaal',
     dimensions: 'Afmetingen',
@@ -450,14 +451,15 @@ function openProductModal(productId, showInterest = false) {
   const onDemand = isOnDemand(product)
   const materialStory = plainTextFromRichText(product.materialStory)
   const gallery = productGallery(product)
+  const detailImages = gallery.slice(1)
   panel.innerHTML = `
     <button class="modal-close" type="button" data-modal-close aria-label="Close product details">x</button>
     <div class="modal-product">
       <div class="modal-product__image">
         <img src="${escapeAttribute(gallery[0])}" alt="${escapeAttribute(product.alt || product.name)}">
-        ${gallery.length > 1 ? `
+        ${detailImages.length ? `
           <div class="modal-product__gallery" aria-label="Product detail images">
-            ${gallery.map((image, index) => `
+            ${detailImages.map((image, index) => `
               <img src="${escapeAttribute(image)}" alt="${escapeAttribute(`${product.name} detail ${index + 1}`)}">
             `).join('')}
           </div>
@@ -795,7 +797,7 @@ function applyLocale() {
   document.querySelector('.newsletter__form input')?.setAttribute('aria-label', t('emailPlaceholder'))
   setText('.newsletter__form button', t('joinFamily'))
 
-  setText('.cart__header .section-label', t('updates'))
+  setText('.cart__header .section-label', t('cartLabel'))
   setText('.cart__header h2', t('cartTitle'))
   setText('.cart__total span', t('total'))
   setText('#checkoutButton', t('checkout'))

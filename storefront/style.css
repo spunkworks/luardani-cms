@@ -61,6 +61,9 @@ button,input{font:inherit}
 .nav.scrolled{top:0;background:rgba(249,248,246,.94);border-bottom-color:var(--line)}
 .nav__inner{height:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px}
 .nav__logo,.footer__logo{
+  display:inline-flex;
+  align-items:center;
+  min-height:44px;
   font-family:var(--heading);
   letter-spacing:.26em;
   font-size:1.04rem;
@@ -88,6 +91,10 @@ button,input{font:inherit}
 }
 .language-switch a{
   color:var(--muted);
+  display:grid;
+  place-items:center;
+  min-width:32px;
+  min-height:32px;
   transition:color .35s ease;
 }
 .language-switch a:hover,.language-switch a.active{color:var(--gold2)}
@@ -96,6 +103,7 @@ button,input{font:inherit}
   border:1px solid var(--gold-line);
   background:rgba(255,253,249,.62);
   color:var(--charcoal);
+  min-height:42px;
   padding:9px 12px;
   cursor:pointer;
   transition:background .35s ease,border-color .35s ease,color .35s ease;
@@ -241,10 +249,11 @@ button,input{font:inherit}
   .nav{top:32px;height:62px}
   .nav.scrolled{top:0}
   .nav__inner{gap:12px}
-  .nav__logo{font-size:.96rem;letter-spacing:.22em}
+  .nav__logo{font-size:.92rem;letter-spacing:.16em}
   .nav__actions{gap:8px}
-  .language-switch{font-size:.58rem;letter-spacing:.1em}
-  .cart-button{font-size:.62rem;letter-spacing:.12em;padding:8px 10px}
+  .language-switch{font-size:.58rem;letter-spacing:.1em;gap:2px}
+  .language-switch a{min-width:40px;min-height:40px}
+  .cart-button{font-size:.62rem;letter-spacing:.12em;min-height:44px;padding:8px 10px}
   .hero{min-height:78svh;padding:116px 0 28px}
   .hero__overlay{
     background:
@@ -478,6 +487,7 @@ button,input{font:inherit}
 .text-link{
   display:inline-block;
   margin-top:14px;
+  padding:10px 0;
   color:var(--charcoal);
   border-bottom:1px solid var(--gold);
   font-size:.7rem;
@@ -577,7 +587,7 @@ button,input{font:inherit}
 .cart-item h3{font-size:.95rem;font-weight:500}
 .cart-item p{color:var(--gold2);font-size:.9rem}
 .cart-item__controls{display:flex;align-items:center;gap:8px;margin-top:10px}
-.cart-item__controls button{width:29px;height:29px;border:1px solid var(--line);background:transparent;color:var(--charcoal);cursor:pointer}
+.cart-item__controls button{width:44px;height:44px;border:1px solid var(--line);background:transparent;color:var(--charcoal);cursor:pointer}
 .cart__footer{border-top:1px solid var(--line);border-bottom:0}
 .cart__total{display:flex;justify-content:space-between;margin-bottom:14px}
 .cart__message{min-height:22px;color:var(--muted);font-size:.84rem;margin-bottom:10px}
@@ -621,6 +631,35 @@ button,input{font:inherit}
 .interest-form input:focus,.interest-form textarea:focus{outline:1px solid var(--gold)}
 .interest-form__message{min-height:22px;margin:0!important;font-size:.86rem}
 @media(min-width:820px){.modal-close{top:18px;margin:18px 18px -58px 0}.modal-product{grid-template-columns:1fr 1fr}.modal-product__image>img{max-height:none}.modal-product__copy{padding:48px}.modal-product__details div{grid-template-columns:120px 1fr;gap:18px}}
+
+@media(max-width:760px){
+  .product-card__buy,.product-card__details,.checkout-button,.newsletter__form button{min-height:52px}
+  .footer__social a{width:44px;height:44px}
+  .cart__header,.cart__footer{padding:26px 24px}
+  .cart__items{padding:10px 24px}
+  .cart-item{grid-template-columns:86px 1fr;gap:16px}
+  .cart-item img{width:86px;height:86px}
+  .cart-item__controls{gap:12px}
+  .cart-item__controls span{min-width:22px;text-align:center}
+  .product-modal{padding:0}
+  .product-modal__panel{
+    width:100%;
+    height:100svh;
+    max-height:100svh;
+    border:0;
+  }
+  .modal-close{
+    position:fixed;
+    top:calc(12px + env(safe-area-inset-top));
+    right:12px;
+    width:44px;
+    height:44px;
+    margin:0;
+  }
+  .modal-product__copy{padding:28px 24px 34px}
+  .modal-product__gallery{grid-template-columns:1fr}
+  .modal-product__gallery img{aspect-ratio:1.45/1}
+}
 
 .utility-page{min-height:100vh;display:grid;place-items:center;padding:22px;background:var(--bone)}
 .utility-card{text-align:center;max-width:540px}

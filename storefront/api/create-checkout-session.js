@@ -4,6 +4,8 @@ const CMS_URL = process.env.PAYLOAD_API_URL || 'https://luardani-cms.vercel.app'
 const ALLOWED_ORIGINS = new Set([
   'https://luardani.com',
   'https://www.luardani.com',
+  'https://luardani.nl',
+  'https://www.luardani.nl',
   'http://localhost:3000',
 ])
 

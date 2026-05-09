@@ -582,7 +582,6 @@ function renderProducts() {
     const product = localProduct(sourceProduct)
     const progress = productionProgress(product)
     const onDemand = isOnDemand(product)
-    const highlights = productHighlights(product)
     return `
     <article class="product-card fade-in" aria-label="${escapeAttribute(product.name)}">
       <div class="product-card__image-wrap">
@@ -592,14 +591,6 @@ function renderProducts() {
       <div class="product-card__body">
         <h3 class="product-card__name">${escapeHTML(product.name)}</h3>
         <p class="product-card__desc">${escapeHTML(product.description)}</p>
-        <dl class="product-card__facts">
-          ${highlights.map(([label, value]) => `
-            <div>
-              <dt>${escapeHTML(label)}</dt>
-              <dd>${escapeHTML(value)}</dd>
-            </div>
-          `).join('')}
-        </dl>
         <div class="product-card__meta">
           <p class="product-card__price">${formatMoney(product.price, product.currency)}</p>
           <p class="product-card__stock">${onDemand ? t('onDemand') : product.inventory > 0 ? `${product.inventory} ${t('available')}` : t('soldOut')}</p>

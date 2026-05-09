@@ -1,4 +1,18 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/bags", "destination": "/index.html" },
+    { "source": "/bags/:slug", "destination": "/index.html" },
+    { "source": "/silk", "destination": "/index.html" },
+    { "source": "/silk/:slug", "destination": "/index.html" },
+    { "source": "/jewelry", "destination": "/index.html" },
+    { "source": "/jewelry/:slug", "destination": "/index.html" },
+    { "source": "/gifts", "destination": "/index.html" },
+    { "source": "/gifts/:slug", "destination": "/index.html" },
+    { "source": "/travel", "destination": "/index.html" },
+    { "source": "/travel/:slug", "destination": "/index.html" },
+    { "source": "/drops", "destination": "/index.html" },
+    { "source": "/drops/:slug", "destination": "/index.html" }
+  ]
 }

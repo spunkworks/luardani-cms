@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260509-marketing-fix">
-  <script src="app.js?v=20260509-marketing-fix" defer></script>
+  <link rel="stylesheet" href="/style.css?v=20260510-category-routes">
+  <script src="/app.js?v=20260510-category-routes" defer></script>
 </head>
 <body>
   <div class="announcement">Luardani &mdash; premium no-size accessories for women</div>
@@ -38,7 +38,7 @@
   <main>
     <section class="hero" id="hero" aria-label="Luardani">
       <div class="hero__bg">
-        <img src="assets/luardani/hero-atelier.png" alt="Luardani table with leather, silk, and jewelry in warm daylight" loading="eager">
+        <img src="/assets/luardani/hero-atelier.png" alt="Luardani leather bag worn in warm natural daylight" loading="eager">
       </div>
       <div class="hero__overlay"></div>
       <div class="hero__content">
@@ -75,6 +75,33 @@
       </div>
     </section>
 
+    <section class="categories" aria-label="Shop by category">
+      <div class="container">
+        <div class="categories__bar">
+          <p class="section-label">Shop by category</p>
+          <h2 class="section-title">Shop the edit</h2>
+        </div>
+        <div class="categories__grid" id="categoriesGrid"></div>
+      </div>
+    </section>
+
+    <section class="products" id="products" aria-label="Products">
+      <div class="container">
+        <div class="products__bar">
+          <div>
+            <p class="section-label">The Collection</p>
+            <h2 class="section-title" id="productsTitle">Everyday Bags</h2>
+            <p class="section-intro" id="productsIntro">Leather pieces for workdays, dinners, and errands.</p>
+          </div>
+          <p class="products__count" id="productsCount">Loading</p>
+        </div>
+        <div class="products__grid" id="productsGrid">
+          <article class="product-skeleton" aria-hidden="true"><i></i><span></span><b></b><em></em></article>
+          <article class="product-skeleton" aria-hidden="true"><i></i><span></span><b></b><em></em></article>
+        </div>
+      </div>
+    </section>
+
     <section class="conversion-strip" aria-label="Why Luardani">
       <div class="container conversion-strip__grid">
         <div>
@@ -88,33 +115,6 @@
         <div>
           <strong>Small batches</strong>
           <span>Demand helps decide what moves into production.</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="categories" aria-label="Shop by category">
-      <div class="container">
-        <div class="categories__bar">
-          <p class="section-label">Shop by category</p>
-          <h2 class="section-title">Shop the edit</h2>
-        </div>
-        <div class="categories__grid" id="categoriesGrid"></div>
-      </div>
-    </section>
-
-    <section class="products products--empty" id="products" aria-label="Products">
-      <div class="container">
-        <div class="products__bar">
-          <div>
-            <p class="section-label">The Collection</p>
-            <h2 class="section-title" id="productsTitle">Choose a category</h2>
-            <p class="section-intro" id="productsIntro">Start with the edit above. Each category opens a focused product selection, so browsing stays calm on mobile.</p>
-          </div>
-          <p class="products__count" id="productsCount">Loading</p>
-        </div>
-        <div class="products__grid" id="productsGrid">
-          <article class="product-skeleton" aria-hidden="true"><i></i><span></span><b></b><em></em></article>
-          <article class="product-skeleton" aria-hidden="true"><i></i><span></span><b></b><em></em></article>
         </div>
       </div>
     </section>
@@ -150,7 +150,7 @@
     <section class="atelier" id="philosophy" aria-label="Brand philosophy">
       <div class="container atelier__grid">
         <div class="atelier__image fade-in">
-          <img src="https://images.unsplash.com/photo-1627123424574-724758594e93?w=1100&q=85" alt="Close-up of refined leather craftsmanship" loading="lazy">
+          <img src="/assets/luardani/safi-cardholder-detail.jpg" alt="Close-up of refined leather grain and stitching" loading="lazy">
         </div>
         <div class="atelier__copy fade-in">
           <p class="section-label">Our Promise</p>

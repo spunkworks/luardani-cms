@@ -28,13 +28,41 @@ const FALLBACK_PRODUCTS = [
 let products = []
 let cart = JSON.parse(localStorage.getItem('luardani-cart') || '[]')
 let interestLog = JSON.parse(localStorage.getItem('luardani-interest') || '{}')
-let selectedCategoryKey = null
+let selectedCategoryKey = 'bags'
+let pendingProductSlug = null
 const SHARE_URL = LOCALE === 'nl' ? 'https://luardani.nl/?ref=friend' : 'https://luardani.com/?ref=friend'
 const SHARE_TEXT = LOCALE === 'nl'
   ? 'Luardani - premium no-size accessoires voor vrouwen. Help kiezen welke kleine batch als volgende komt.'
   : 'Luardani - premium no-size accessories for women. Help choose the next small-batch drop.'
 
 const COPY = {
+  en: {
+    ready: 'Ready to ship',
+    preorder: 'Pre-order',
+    conceptSample: 'Concept',
+    noSizeEdit: 'No-size edit',
+    production: 'Production interest',
+    onDemand: 'Register interest',
+    available: 'available',
+    soldOut: 'Sold out',
+    details: 'Details',
+    add: 'Add',
+    joinRun: 'Register interest',
+    maison: 'Luardani',
+    shareLabel: 'Share',
+    sharePiece: 'Share this piece',
+    emailLabel: 'Email',
+    inquiryNote: 'Note',
+    inquiryPlaceholder: 'Optional: tell us why this piece fits your wardrobe',
+    expressInterest: 'Register interest',
+    close: 'Close',
+    material: 'Material',
+    dimensions: 'Dimensions',
+    edition: 'Edition',
+    care: 'Care',
+    selectedPiece: 'piece in this category',
+    selectedPieces: 'pieces in this category',
+  },
   nl: {
     title: 'Luardani - Premium accessoires voor vrouwen',
     description: 'Luardani maakt premium no-size accessoires voor vrouwen: lederwaren, zijde, sieraden en travel essentials rond Fatima haar Marokkaanse familienaam.',
@@ -293,8 +321,35 @@ const CATEGORY_PRODUCT_SLUGS = {
   drops: ['toscana-handbag', 'leather-slippers', 'catania-sunglasses', 'kasbah-silk-wrap', 'lalla-ring-set'],
 }
 
+const CATEGORY_ROUTES = {
+  bags: 'bags',
+  silk: 'silk',
+  jewelry: 'jewelry',
+  gifts: 'gifts',
+  travel: 'travel',
+  drops: 'drops',
+}
+
+const ROUTE_CATEGORIES = Object.fromEntries(Object.entries(CATEGORY_ROUTES).map(([key, value]) => [value, key]))
+const PRODUCT_ROUTE_SLUGS = {
+  'leather-cardholder': 'safi-cardholder',
+  'toscana-handbag': 'marrakech-tote',
+  'silk-scarf': 'noor-silk-square',
+  'leather-slippers': 'medina-slipper',
+  'catania-sunglasses': 'atlas-sunglasses',
+  'riad-mini-bag': 'riad-mini-bag',
+  'tadelakt-pouch': 'tadelakt-pouch',
+  'zayna-cuff': 'zayna-cuff',
+  'amira-hoops': 'amira-hoops',
+  'lalla-ring-set': 'lalla-ring-set',
+  'kasbah-silk-wrap': 'kasbah-silk-wrap',
+  'nomad-key-case': 'nomad-key-case',
+}
+const ROUTE_PRODUCT_SLUGS = Object.fromEntries(Object.entries(PRODUCT_ROUTE_SLUGS).map(([productSlug, routeSlug]) => [routeSlug, productSlug]))
+
 const t = (key) => COPY[LOCALE]?.[key] || key
 const cleanTone = (value = '') => String(value)
+  .replace(/patron piece/gi, 'limited piece')
   .replace(/patron commitment/gi, 'customer interest')
   .replace(/patron batch/gi, 'small batch')
   .replace(/\bpatrons\b/gi, 'customers')
@@ -310,6 +365,11 @@ const dutchMaterialStory = (product) => {
 const localProduct = (product) => {
   const cleaned = {
     ...product,
+    name: cleanTone(product.name || ''),
+    description: cleanTone(product.description || ''),
+    material: cleanTone(product.material || ''),
+    dimensions: cleanTone(product.dimensions || ''),
+    care: cleanTone(product.care || ''),
     craftNote: cleanTone(product.craftNote || ''),
     editionSize: cleanTone(product.editionSize || ''),
   }
@@ -338,12 +398,13 @@ const escapeAttribute = (value = '') => escapeHTML(value).replace(/`/g, '&#96;')
 const productImage = (product) => {
   const local = PRODUCT_ASSETS[product.slug]?.[0]
   const image = local || (product.image && product.image.url ? `${CMS_URL}${product.image.url}` : product.externalImage)
-  return /^https?:\/\//.test(image || '') || image?.startsWith('assets/') ? image : ''
+  if (image?.startsWith('assets/')) return `/${image}`
+  return /^https?:\/\//.test(image || '') ? image : ''
 }
 
 const productGallery = (product) => {
   const assets = PRODUCT_ASSETS[product.slug]
-  if (assets) return assets
+  if (assets) return assets.map((asset) => `/${asset}`)
   return [productImage(product)].filter(Boolean)
 }
 
@@ -358,6 +419,26 @@ const selectedCategory = () => CATEGORY_EDITS.find((category) => category.key ==
 const productsForCategory = (key) => {
   const slugs = CATEGORY_PRODUCT_SLUGS[key] || []
   return products.filter((product) => slugs.includes(product.slug))
+}
+const categoryForProduct = (product) => CATEGORY_EDITS.find((category) => (CATEGORY_PRODUCT_SLUGS[category.key] || []).includes(product.slug))
+const pathForCategory = (key) => `/${CATEGORY_ROUTES[key] || CATEGORY_ROUTES.bags}`
+const pathForProduct = (product) => {
+  const category = categoryForProduct(product)
+  return `${pathForCategory(category?.key || selectedCategoryKey)}/${PRODUCT_ROUTE_SLUGS[product.slug] || product.slug}`
+}
+
+function applyRouteFromPath() {
+  const parts = window.location.pathname.split('/').filter(Boolean)
+  const categoryKey = ROUTE_CATEGORIES[parts[0]]
+  selectedCategoryKey = categoryKey || 'bags'
+  pendingProductSlug = categoryKey && parts[1] ? (ROUTE_PRODUCT_SLUGS[parts[1]] || parts[1]) : null
+}
+
+function pushShopPath(path) {
+  if (window.location.pathname !== path) {
+    window.history.pushState({}, '', path)
+    updateLanguageLinks()
+  }
 }
 
 const productionProgress = (product) => {
@@ -439,7 +520,7 @@ async function shareLuardani(messageEl) {
 
 async function shareProduct(product, messageEl) {
   const origin = LOCALE === 'nl' ? 'https://luardani.nl' : 'https://luardani.com'
-  const url = `${origin}/?ref=friend&piece=${encodeURIComponent(product.slug || product.id)}#products`
+  const url = `${origin}${pathForProduct(product)}?ref=friend`
   const text = LOCALE === 'nl'
     ? `Ik dacht dat je ${product.name} van Luardani mooi zou vinden - een no-size accessoire met Marokkaanse roots.`
     : `I thought you might like ${product.name} from Luardani - a no-size accessory with Moroccan roots.`
@@ -480,15 +561,6 @@ function renderProducts() {
   if (!products.length) {
     grid.innerHTML = `<p class="empty">${LOCALE === 'nl' ? 'De collectie wordt voorbereid.' : 'The collection is being prepared.'}</p>`
     count.textContent = '0 pieces'
-    return
-  }
-
-  if (!category) {
-    section?.classList.add('products--empty')
-    title.textContent = LOCALE === 'nl' ? t('collectionTitle') : 'Choose a category'
-    intro.textContent = LOCALE === 'nl' ? t('collectionIntro') : 'Start with the edit above. Each category opens a focused product selection, so browsing stays calm on mobile.'
-    count.textContent = ''
-    grid.innerHTML = `<p class="empty">${escapeHTML(LOCALE === 'nl' ? t('chooseCategory') : 'Choose a category to view products.')}</p>`
     return
   }
 
@@ -558,6 +630,12 @@ function renderProducts() {
     button.addEventListener('click', () => openProductModal(Number(button.dataset.interestId), true))
   })
   observeFadeIns()
+
+  if (pendingProductSlug) {
+    const product = visibleProducts.find((item) => item.slug === pendingProductSlug)
+    pendingProductSlug = null
+    if (product) openProductModal(Number(product.id), isOnDemand(product), false)
+  }
 }
 
 function renderCategories() {
@@ -566,17 +644,20 @@ function renderCategories() {
 
   grid.innerHTML = CATEGORY_EDITS.map((category) => `
     <article class="category-card fade-in">
-      <button type="button" data-category-key="${escapeAttribute(category.key)}" class="${category.key === selectedCategoryKey ? 'active' : ''}" aria-label="${escapeAttribute(category.label)}">
-        <img src="${escapeAttribute(category.image)}" alt="${escapeAttribute(category.label)} product edit" loading="lazy">
+      <a href="${escapeAttribute(pathForCategory(category.key))}" data-category-key="${escapeAttribute(category.key)}" class="${category.key === selectedCategoryKey ? 'active' : ''}" aria-label="${escapeAttribute(category.label)}">
+        <img src="${escapeAttribute(category.image.startsWith('assets/') ? `/${category.image}` : category.image)}" alt="${escapeAttribute(category.label)} product edit" loading="lazy">
         <span>${escapeHTML(LOCALE === 'nl' ? category.labelNl : category.label)}</span>
         <p>${escapeHTML(LOCALE === 'nl' ? category.textNl : category.text)}</p>
-      </button>
+      </a>
     </article>
   `).join('')
 
-  grid.querySelectorAll('[data-category-key]').forEach((button) => {
-    button.addEventListener('click', () => {
-      selectedCategoryKey = button.dataset.categoryKey
+  grid.querySelectorAll('[data-category-key]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault()
+      selectedCategoryKey = link.dataset.categoryKey
+      pendingProductSlug = null
+      pushShopPath(pathForCategory(selectedCategoryKey))
       renderCategories()
       renderProducts()
       document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -584,10 +665,11 @@ function renderCategories() {
   })
 }
 
-function openProductModal(productId, showInterest = false) {
+function openProductModal(productId, showInterest = false, updatePath = true) {
   const sourceProduct = products.find((item) => Number(item.id) === productId)
   if (!sourceProduct) return
   const product = localProduct(sourceProduct)
+  if (updatePath) pushShopPath(pathForProduct(sourceProduct))
 
   const modal = document.getElementById('productModal')
   const panel = document.getElementById('productModalPanel')
@@ -636,8 +718,8 @@ function openProductModal(productId, showInterest = false) {
           <p class="section-label">${escapeHTML(t('shareLabel'))}</p>
           <div>
             <button class="product-card__details" type="button" data-product-share="${product.id}">${escapeHTML(t('sharePiece'))}</button>
-            <a class="product-card__details" href="https://wa.me/?text=${encodeURIComponent(`I thought you might like ${product.name} from Luardani. https://luardani.com/?ref=friend&piece=${product.slug || product.id}#products`)}" target="_blank" rel="noopener">WhatsApp</a>
-            <a class="product-card__details" href="https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`https://luardani.com/?ref=friend&piece=${product.slug || product.id}#products`)}&media=${encodeURIComponent(productImage(product))}&description=${encodeURIComponent(product.name)}" target="_blank" rel="noopener">Pinterest</a>
+            <a class="product-card__details" href="https://wa.me/?text=${encodeURIComponent(`I thought you might like ${product.name} from Luardani. ${window.location.origin}${pathForProduct(sourceProduct)}?ref=friend`)}" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="product-card__details" href="https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${window.location.origin}${pathForProduct(sourceProduct)}?ref=friend`)}&media=${encodeURIComponent(productImage(product))}&description=${encodeURIComponent(product.name)}" target="_blank" rel="noopener">Pinterest</a>
           </div>
           <p class="share-message" role="status"></p>
         </div>
@@ -717,9 +799,12 @@ function openProductModal(productId, showInterest = false) {
   }
 }
 
-function closeProductModal() {
+function closeProductModal(updatePath = true) {
   document.getElementById('productModal').classList.remove('open')
   document.getElementById('productModal').setAttribute('aria-hidden', 'true')
+  if (updatePath && selectedCategoryKey && ROUTE_CATEGORIES[window.location.pathname.split('/').filter(Boolean)[0]]) {
+    pushShopPath(pathForCategory(selectedCategoryKey))
+  }
 }
 
 function saveCart() {
@@ -979,6 +1064,7 @@ function updateLanguageLinks() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  applyRouteFromPath()
   updateLanguageLinks()
   applyLocale()
   renderCategories()
@@ -1017,6 +1103,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40)
+  })
+  window.addEventListener('popstate', () => {
+    applyRouteFromPath()
+    const routeHasProduct = Boolean(pendingProductSlug)
+    renderCategories()
+    renderProducts()
+    if (!routeHasProduct) closeProductModal(false)
   })
   await loadProducts()
   renderCart()

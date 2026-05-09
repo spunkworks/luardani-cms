@@ -30,61 +30,80 @@ let cart = JSON.parse(localStorage.getItem('luardani-cart') || '[]')
 let interestLog = JSON.parse(localStorage.getItem('luardani-interest') || '{}')
 const SHARE_URL = LOCALE === 'nl' ? 'https://luardani.nl/?ref=friend' : 'https://luardani.com/?ref=friend'
 const SHARE_TEXT = LOCALE === 'nl'
-  ? 'Luardani - moderne no-size essentials met Marokkaanse roots, gemaakt voor dagelijks gebruik.'
-  : 'Luardani - modern no-size essentials with Moroccan roots, made for everyday movement.'
+  ? 'Luardani - premium no-size accessoires voor vrouwen. Help kiezen welke kleine batch als volgende komt.'
+  : 'Luardani - premium no-size accessories for women. Help choose the next small-batch drop.'
 
 const COPY = {
   nl: {
-    title: 'Luardani - Moderne essentials met Marokkaanse roots',
-    description: 'Luardani is een modern accessoiresmerk voor vrouwen rond Fatima’s Marokkaanse familienaam, met no-size lederwaren, zijde, sieraden en travel essentials.',
-    navLegacy: 'Erfenis',
+    title: 'Luardani - Premium accessoires voor vrouwen',
+    description: 'Luardani maakt premium no-size accessoires voor vrouwen: lederwaren, zijde, sieraden en travel essentials rond Fatima haar Marokkaanse familienaam.',
+    navLegacy: 'Roots',
     navCollection: 'Collectie',
     navPhilosophy: 'Filosofie',
     cart: 'Tas',
-    announcement: 'Luardani - moderne no-size essentials',
+    announcement: 'Luardani - premium no-size accessoires voor vrouwen',
     heroEyebrow: 'Luardani',
-    heroTitle: 'Moderne essentials, geworteld in familie.',
-    heroTagline: 'Lederwaren, zijde, sieraden en travel essentials voor vrouwen die houden van rustige stijl, warme materialen en dagelijks gemak.',
+    heroTitle: 'Premium accessoires voor elke dag.',
+    heroTagline: 'No-size lederwaren, zijde, sieraden en travel essentials voor vrouwen die houden van rustige stijl, warme materialen en dagelijks gemak.',
     shopCollection: 'Shop de collectie',
     roots: 'Onze roots',
-    noteLabel: 'Kleine batches',
-    noteText: 'Gebruiksvriendelijke stukken, met zorg gemaakt en minder verspilling.',
+    noteLabel: 'Waarom no-size',
+    noteText: 'Makkelijker kopen, makkelijker cadeau geven, minder retourgedoe.',
+    proofOne: 'Geen maatstress',
+    proofTwo: 'Cadeauwaardig',
+    proofThree: 'Kleine batches',
+    stripWomenTitle: 'Voor vrouwen',
+    stripWomenText: 'Clean accessoires die werken bij dagelijkse outfits.',
+    stripNoSizeTitle: 'No-size',
+    stripNoSizeText: 'Geen pasvormgok: afmetingen vervangen maattabellen.',
+    stripBatchTitle: 'Kleine batches',
+    stripBatchText: 'Vraag helpt bepalen wat in productie gaat.',
     introLabel: 'De naam, de roots',
     introTitle: 'Luardani is Fatima’s Marokkaanse familienaam.',
-    introText: 'Daarom voelt het merk vanaf het begin persoonlijk. We bouwen rond bruikbare no-size stukken: lederwaren, zijde, sieraden en travel objects die modern voelen zonder hun roots te verliezen.',
+    introText: 'Daarom voelt het merk vanaf het begin persoonlijk. We bouwen rond bruikbare no-size stukken: lederwaren, zijde, sieraden en travel essentials die modern voelen zonder hun roots te verliezen.',
     maison1Title: 'Familienaam, modern ritme',
     maison1Text: 'Luardani begint dichtbij huis: een Marokkaanse familienaam, vertaald naar clean everyday pieces voor het echte leven.',
-    maison2Title: 'De no-size filosofie',
-    maison2Text: 'Wij richten ons op essentials die je leven aanvullen, niet je maten: lederwaren, vloeiende zijde en sculpturale sieraden.',
-    maison3Title: 'Kleine batches, minder waste',
-    maison3Text: 'We testen liever vraag, luisteren naar klanten en produceren zorgvuldig dan dat we schappen vullen met ongewenste voorraad.',
+    maison2Title: 'No-size, minder twijfel',
+    maison2Text: 'Geen maten, geen pasvormstress. Elk stuk heeft duidelijke afmetingen, materiaalinformatie en een helder gebruiksmoment.',
+    maison3Title: 'Kleine batches, minder verspilling',
+    maison3Text: 'We testen liever vraag, luisteren naar klanten en produceren zorgvuldig dan dat we ongewenste voorraad bouwen.',
     collectionLabel: 'De collectie',
     collectionTitle: 'No-size essentials',
+    collectionIntro: 'Shop beschikbare stukken direct, of toon interesse in vraaggestuurde items voordat een productieronde opent.',
     promiseLabel: 'Onze belofte',
     promiseTitle: 'Gemaakt om door te geven.',
     promiseText1: 'Luardani verbindt Marokkaanse familieroots met een clean, moderne manier van dragen. De stukken zijn makkelijk te gebruiken, makkelijk te geven en gemaakt voor dagelijks leven.',
     promiseText2: 'We focussen op no-size accessoires omdat shoppen simpeler wordt, returns lager kunnen blijven en er meer aandacht naar materiaal en afwerking gaat.',
     enterCollection: 'Shop de collectie',
     secureCheckout: 'Veilige Stripe checkout',
-    rarity: 'Vraaggestuurde zeldzaamheid',
+    secureCheckoutText: 'Kaartbetalingen lopen via Stripe in een beveiligde checkout.',
+    rarity: 'Vraaggestuurde releases',
+    rarityText: 'On-demand stukken verzamelen eerst interesse en gaan daarna pas richting productie.',
     noSize: 'No-size essentials',
+    noSizeText: 'Productdetails tonen afmetingen, materiaal en onderhoud voor je koopt.',
+    deliveryLabel: 'Levering',
+    deliveryTitle: 'Duidelijk voor checkout.',
+    deliveryText: 'Beschikbare stukken tonen voorraad op de productkaart. Vraaggestuurde stukken tonen interesse in plaats van een koopknop.',
+    materialsLabel: 'Materialen',
+    materialsTitle: 'Premium herkomst, praktisch onderhoud.',
+    materialsText: 'Productdetails benadrukken leer, zijde, afwerking, afmetingen en onderhoud voordat je beslist.',
     socialFirst: 'Social first',
-    followRelease: 'Volg nieuwe ideeën, drops en favorieten.',
+    followRelease: 'Gemaakt om ontdekt en bewaard te worden.',
     familyOwned: 'Familie-eigendom',
-    familyOwnedText: 'Gebouwd rond Fatima’s Marokkaanse familienaam.',
-    currentEdit: 'Huidige selectie',
-    currentEditText: 'Twaalf vrouwelijke no-size essentials in lederwaren, zijde, sieraden en travel.',
-    lessWaste: 'Minder verspilling',
-    lessWasteText: 'Vraag bepaalt wat in productie gaat.',
+    familyOwnedText: 'Gebouwd rond Fatima haar Marokkaanse familienaam, niet rond een verzonnen label.',
+    currentEdit: 'Social first',
+    currentEditText: 'Ontworpen voor Instagram, Pinterest en deelbare productontdekking.',
+    lessWaste: 'Klantensignaal',
+    lessWasteText: 'Vraaggestuurde stukken laten klanten helpen bepalen wat een echte productieronde wordt.',
     privateInvitation: 'Deel Luardani',
-    shareHeading: 'Stuur Luardani naar een vriend.',
-    shareText: 'Ken je iemand die houdt van clean accessoires, warme materialen en een rustige stijl? Deel de collectie met haar.',
+    shareHeading: 'Help kiezen wat we maken.',
+    shareText: 'Deel de edit met iemand wiens smaak je vertrouwt. Elk bezoek en elk bewaard stuk helpt bepalen wat een echte drop wordt.',
     shareButton: 'Deel Luardani',
     copyInvite: 'Kopieer uitnodiging',
     updates: 'Updates',
-    newsletterTitle: 'Ontvang nieuwe drops, producttests en restock notes.',
+    newsletterTitle: 'Krijg vroege toegang tot kleine batches en stem mee op volgende drops.',
     emailPlaceholder: 'E-mailadres',
-    joinFamily: 'Word deel van de familie',
+    joinFamily: 'Krijg early access',
     cartLabel: 'Jouw tas',
     cartTitle: 'Jouw tas',
     total: 'Totaal',
@@ -92,17 +111,17 @@ const COPY = {
     copyright: 'Alle rechten voorbehouden.',
     pieces: 'stukken',
     piece: 'stuk',
-    ready: 'Klaar voor verzending',
+    ready: 'Direct te koop',
     preorder: 'Pre-order',
     conceptSample: 'Concept',
-    noSizeEdit: 'No-size edit',
-    production: 'Productiecommitment',
-    onDemand: 'Op aanvraag',
+    noSizeEdit: 'No-size selectie',
+    production: 'Interesse richting productie',
+    onDemand: 'Interesse mogelijk',
     available: 'beschikbaar',
     soldOut: 'Uitverkocht',
     details: 'Details',
     add: 'Toevoegen',
-    joinRun: 'Interesse',
+    joinRun: 'Toon interesse',
     maison: 'Luardani',
     material: 'Materiaal',
     dimensions: 'Afmetingen',
@@ -112,17 +131,17 @@ const COPY = {
     sharePiece: 'Deel dit stuk',
     emailLabel: 'E-mail',
     inquiryNote: 'Bericht',
-    inquiryPlaceholder: 'Optioneel: vertel wat je aantrekt in dit stuk',
+    inquiryPlaceholder: 'Optioneel: vertel waarom dit stuk bij je past',
     expressInterest: 'Toon interesse',
     close: 'Sluiten',
     inquirySubmitting: 'Aanvraag wordt verzonden...',
     inquiryReceived: 'Aanvraag ontvangen. We nemen contact op wanneer deze productieronde opent.',
     inquiryPreview: 'Je aanvraag is genoteerd in deze preview.',
-    cartEmpty: 'Je cart is leeg.',
-    addFirst: 'Voeg eerst een product toe aan je cart.',
+    cartEmpty: 'Je tas is leeg.',
+    addFirst: 'Voeg eerst een product toe aan je tas.',
     preparingCheckout: 'Veilige checkout wordt voorbereid...',
     newsletterEmpty: 'Vul een e-mailadres in voor updates.',
-    newsletterSuccess: 'Je staat op de lijst. We mailen wanneer de volgende drop opent.',
+    newsletterSuccess: 'Je staat op de lijst. We mailen wanneer early access of een stemronde opent.',
     inviteCopied: 'Uitnodigingslink gekopieerd.',
     inviteShared: 'Uitnodiging gedeeld.',
     shareCancelled: 'Delen is geannuleerd.',
@@ -180,6 +199,21 @@ const PRODUCT_NL = {
   },
 }
 
+const PRODUCT_NL_DETAILS = {
+  'leather-cardholder': { material: 'Marokkaans generfd leer met zachte satijnglans', dimensions: '10 x 7 cm, zes kaartsleuven', editionSize: 'Kleine batch', care: 'Afnemen met een zachte doek' },
+  'toscana-handbag': { material: 'Marokkaans volnerfleer met warm goudkleurig beslag', dimensions: '32 x 24 x 12 cm, met uitneembare pouch', editionSize: 'Kleine batch van 24', care: 'Droog bewaren en vullen wanneer niet in gebruik' },
+  'silk-scarf': { material: 'Anatolische zijde met zachte twillstructuur', dimensions: '90 x 90 cm', editionSize: 'Seizoenseditie', care: 'Chemisch reinigen aanbevolen' },
+  'leather-slippers': { material: 'Zacht Marokkaans leer', dimensions: 'Instapmodel met open hiel', editionSize: 'Vraaggestuurde batch', care: 'Droog houden en voorzichtig reinigen' },
+  'catania-sunglasses': { material: 'Acetaatlook montuur met warme lenzen', dimensions: 'Medium frame, no-size accessoire', editionSize: 'Kleine batch', care: 'Bewaren in etui' },
+  'riad-mini-bag': { material: 'Marokkaans leer met gestructureerde finish', dimensions: '18 x 12 x 6 cm', editionSize: 'Kleine batch', care: 'Afnemen met droge doek' },
+  'tadelakt-pouch': { material: 'Zacht Marokkaans leer', dimensions: '20 x 13 cm', editionSize: 'Doorlopende kleine batch', care: 'Niet langdurig blootstellen aan vocht' },
+  'zayna-cuff': { material: 'Goudkleurige finish op gepolijst metaal', dimensions: 'Open cuff, licht verstelbaar', editionSize: 'Kleine batch', care: 'Contact met parfum en water vermijden' },
+  'amira-hoops': { material: 'Goudkleurige finish op licht metaal', dimensions: 'Diameter 24 mm', editionSize: 'Kleine batch', care: 'Droog bewaren' },
+  'lalla-ring-set': { material: 'Warme goudkleurige finish', dimensions: 'Set van drie ringen', editionSize: 'Conceptbatch', care: 'Afdoen bij water en sporten' },
+  'kasbah-silk-wrap': { material: 'Anatolische zijde met vloeiende valling', dimensions: '180 x 65 cm', editionSize: 'Vraaggestuurde batch', care: 'Chemisch reinigen aanbevolen' },
+  'nomad-key-case': { material: 'Marokkaans generfd leer', dimensions: '10 x 6 cm', editionSize: 'Kleine batch', care: 'Afnemen met zachte doek' },
+}
+
 const PRODUCT_ASSETS = {
   'leather-cardholder': ['assets/luardani/safi-cardholder.jpg', 'assets/luardani/safi-cardholder-detail.jpg'],
   'toscana-handbag': ['assets/luardani/marrakech-tote.jpg', 'assets/luardani/marrakech-tote-detail.jpg'],
@@ -197,51 +231,72 @@ const PRODUCT_ASSETS = {
 
 const CATEGORY_EDITS = [
   {
-    label: 'Leather Goods',
-    labelNl: 'Lederwaren',
-    text: 'Everyday leather pieces for work, travel, and ritual.',
-    textNl: 'Dagelijkse leren stukken voor werk, reis en ritueel.',
+    label: 'Everyday Bags',
+    labelNl: 'Tassen voor elke dag',
+    text: 'Leather pieces for workdays, dinners, and errands.',
+    textNl: 'Leren stukken voor werk, diner en dagelijks gebruik.',
     image: 'assets/luardani/marrakech-tote.jpg',
   },
   {
-    label: 'Silk & Cashmere',
-    labelNl: 'Zijde & Cashmere',
-    text: 'Anatolian Silk layers with movement, softness, and ease.',
-    textNl: 'Anatolische zijde met beweging, zachtheid en gemak.',
+    label: 'Silk Layers',
+    labelNl: 'Zijden lagen',
+    text: 'Anatolian Silk that dresses up simple outfits.',
+    textNl: 'Anatolische zijde die eenvoudige outfits mooier maakt.',
     image: 'assets/luardani/noor-silk-square.jpg',
   },
   {
-    label: 'Jewelry',
-    labelNl: 'Sieraden',
-    text: 'Warm gold-toned forms for everyday ceremony.',
-    textNl: 'Warme goudkleurige vormen voor alledaagse ceremonie.',
+    label: 'Daily Jewelry',
+    labelNl: 'Sieraden voor dagelijks',
+    text: 'Warm gold-toned details for every day.',
+    textNl: 'Warme goudkleurige details voor elke dag.',
     image: 'assets/luardani/amira-hoops.jpg',
   },
   {
-    label: 'Home & Gift',
-    labelNl: 'Home & Gift',
-    text: 'Small personal objects from the Luardani edit.',
-    textNl: 'Kleine persoonlijke objecten uit de Luardani edit.',
+    label: 'Gifts',
+    labelNl: 'Cadeaus',
+    text: 'No-size pieces that are easy to give.',
+    textNl: 'No-size stukken die makkelijk cadeau te geven zijn.',
     image: 'assets/luardani/medina-slipper.jpg',
   },
   {
-    label: 'Tech & Travel',
-    labelNl: 'Tech & Travel',
-    text: 'No-size pieces for movement, devices, and daily order.',
-    textNl: 'No-size stukken voor beweging, devices en dagelijkse orde.',
+    label: 'Travel & Tech',
+    labelNl: 'Travel & tech',
+    text: 'Organised pieces for movement and daily order.',
+    textNl: 'Georganiseerde stukken voor onderweg en dagelijkse orde.',
     image: 'assets/luardani/tadelakt-pouch.jpg',
   },
   {
-    label: 'The Vault',
-    labelNl: 'The Vault',
-    text: 'Concept pieces we test before larger production.',
-    textNl: 'Conceptstukken die we testen voor grotere productie.',
+    label: 'Next Drops',
+    labelNl: 'Volgende drops',
+    text: 'Concepts customers can help move forward.',
+    textNl: 'Concepten die klanten kunnen helpen doorzetten.',
     image: 'assets/luardani/lalla-ring-set.jpg',
   },
 ]
 
 const t = (key) => COPY[LOCALE]?.[key] || key
-const localProduct = (product) => LOCALE === 'nl' ? { ...product, ...(PRODUCT_NL[product.slug] || {}) } : product
+const cleanTone = (value = '') => String(value)
+  .replace(/patron commitment/gi, 'customer interest')
+  .replace(/patron batch/gi, 'small batch')
+  .replace(/\bpatrons\b/gi, 'customers')
+  .replace(/\bpatron\b/gi, 'customer')
+
+const dutchMaterialStory = (product) => {
+  if (!isOnDemand(product)) {
+    return 'Gemaakt als no-size accessoire met duidelijke afmetingen, materiaalinformatie en praktisch onderhoud, zodat kopen minder twijfel geeft.'
+  }
+  return 'Dit stuk gaat niet automatisch in productie. We verzamelen eerst interesse, zodat een kleine batch pas start wanneer genoeg klanten het echt willen.'
+}
+
+const localProduct = (product) => {
+  const cleaned = {
+    ...product,
+    craftNote: cleanTone(product.craftNote || ''),
+    editionSize: cleanTone(product.editionSize || ''),
+  }
+  if (LOCALE !== 'nl') return cleaned
+  return { ...cleaned, ...(PRODUCT_NL[product.slug] || {}), ...(PRODUCT_NL_DETAILS[product.slug] || {}) }
+}
 const localizedUrl = (locale) => {
   const host = locale === 'nl' ? 'https://luardani.nl' : 'https://luardani.com'
   return `${host}${window.location.pathname}${window.location.search}${window.location.hash}`
@@ -298,6 +353,21 @@ const detailRows = (product) => [
   ['Edition', product.editionSize],
   ['Care', product.care],
 ].filter(([, value]) => value)
+
+const productHighlights = (product) => {
+  const rows = []
+  if (product.material) rows.push([t('material'), cleanTone(product.material)])
+  if (product.dimensions) rows.push([t('dimensions'), cleanTone(product.dimensions)])
+  if (!rows.length) {
+    rows.push([
+      LOCALE === 'nl' ? 'Gebruik' : 'Use',
+      isOnDemand(product)
+        ? (LOCALE === 'nl' ? 'Interesse tonen voor productie' : 'Register interest before production')
+        : (LOCALE === 'nl' ? 'Direct te bestellen' : 'Ready to order'),
+    ])
+  }
+  return rows.slice(0, 2)
+}
 
 const plainTextFromRichText = (value) => {
   if (!value || !value.root || !Array.isArray(value.root.children)) return ''
@@ -385,6 +455,7 @@ async function loadProducts() {
     const product = localProduct(sourceProduct)
     const progress = productionProgress(product)
     const onDemand = isOnDemand(product)
+    const highlights = productHighlights(product)
     return `
     <article class="product-card fade-in" aria-label="${escapeAttribute(product.name)}">
       <div class="product-card__image-wrap">
@@ -394,10 +465,19 @@ async function loadProducts() {
       <div class="product-card__body">
         <h3 class="product-card__name">${escapeHTML(product.name)}</h3>
         <p class="product-card__desc">${escapeHTML(product.description)}</p>
+        <dl class="product-card__facts">
+          ${highlights.map(([label, value]) => `
+            <div>
+              <dt>${escapeHTML(label)}</dt>
+              <dd>${escapeHTML(value)}</dd>
+            </div>
+          `).join('')}
+        </dl>
         <div class="product-card__meta">
           <p class="product-card__price">${formatMoney(product.price, product.currency)}</p>
           <p class="product-card__stock">${onDemand ? t('onDemand') : product.inventory > 0 ? `${product.inventory} ${t('available')}` : t('soldOut')}</p>
         </div>
+        ${onDemand ? `<p class="product-card__note">${escapeHTML(LOCALE === 'nl' ? 'Nog niet afrekenen: laat je e-mail achter om deze productieronde te steunen.' : 'Not ready for checkout: leave your email to support this production run.')}</p>` : `<p class="product-card__note">${escapeHTML(LOCALE === 'nl' ? 'Direct veilig afrekenen via Stripe.' : 'Ready for secure Stripe checkout.')}</p>`}
         <div class="product-card__progress" aria-label="Production Commitment ${progress}%">
           <div>
             <span>${escapeHTML(t('production'))}</span>
@@ -449,7 +529,7 @@ function openProductModal(productId, showInterest = false) {
   const panel = document.getElementById('productModalPanel')
   const progress = productionProgress(product)
   const onDemand = isOnDemand(product)
-  const materialStory = plainTextFromRichText(product.materialStory)
+  const materialStory = LOCALE === 'nl' ? dutchMaterialStory(product) : cleanTone(plainTextFromRichText(product.materialStory))
   const gallery = productGallery(product)
   const detailImages = gallery.slice(1)
   panel.innerHTML = `
@@ -470,7 +550,7 @@ function openProductModal(productId, showInterest = false) {
         <h2>${escapeHTML(product.name)}</h2>
         <span class="modal-product__price">${formatMoney(product.price, product.currency)}</span>
         <p>${escapeHTML(product.description)}</p>
-        ${product.craftNote ? `<p>${escapeHTML(product.craftNote)}</p>` : ''}
+        ${product.craftNote && LOCALE !== 'nl' ? `<p>${escapeHTML(cleanTone(product.craftNote))}</p>` : ''}
         ${materialStory ? `<p class="modal-product__story">${escapeHTML(materialStory)}</p>` : ''}
         <p>${onDemand ? LOCALE === 'nl' ? `${product.interestCount || 0} aanvragen genoteerd richting een productiedrempel van ${product.threshold || 50}.` : `${product.interestCount || 0} customer requests recorded toward a production threshold of ${product.threshold || 50}.` : product.inventory > 0 ? LOCALE === 'nl' ? `${product.inventory} stukken momenteel beschikbaar.` : `${product.inventory} pieces currently available.` : LOCALE === 'nl' ? t('soldOut') : 'This piece is currently sold out.'}</p>
         <div class="product-card__progress product-card__progress--modal" aria-label="Production Commitment ${progress}%">
@@ -484,7 +564,7 @@ function openProductModal(productId, showInterest = false) {
           ${detailRows(product).map(([label, value]) => `
             <div>
               <dt>${escapeHTML(t(label.toLowerCase()))}</dt>
-              <dd>${escapeHTML(value)}</dd>
+              <dd>${escapeHTML(cleanTone(value))}</dd>
             </div>
           `).join('')}
         </dl>
@@ -751,8 +831,18 @@ function applyLocale() {
   setText('.hero__tagline', t('heroTagline'))
   setText('.hero__actions .btn--solid', t('shopCollection'))
   setText('.hero__actions .btn--ghost', t('roots'))
+  setText('.hero__proof span:nth-child(1)', t('proofOne'))
+  setText('.hero__proof span:nth-child(2)', t('proofTwo'))
+  setText('.hero__proof span:nth-child(3)', t('proofThree'))
   setText('.hero__note span', t('noteLabel'))
   setText('.hero__note strong', t('noteText'))
+
+  setText('.conversion-strip__grid div:nth-child(1) strong', t('stripWomenTitle'))
+  setText('.conversion-strip__grid div:nth-child(1) span', t('stripWomenText'))
+  setText('.conversion-strip__grid div:nth-child(2) strong', t('stripNoSizeTitle'))
+  setText('.conversion-strip__grid div:nth-child(2) span', t('stripNoSizeText'))
+  setText('.conversion-strip__grid div:nth-child(3) strong', t('stripBatchTitle'))
+  setText('.conversion-strip__grid div:nth-child(3) span', t('stripBatchText'))
 
   setText('.intro .section-label', t('introLabel'))
   setText('.intro h2', t('introTitle'))
@@ -766,6 +856,7 @@ function applyLocale() {
 
   setText('.products .section-label', t('collectionLabel'))
   setText('.products .section-title', t('collectionTitle'))
+  setText('.products .section-intro', t('collectionIntro'))
   setText('.categories .section-label', 'Shop per categorie')
   setText('.categories .section-title', 'Shop de edit')
   setText('.atelier__copy .section-label', t('promiseLabel'))
@@ -775,8 +866,17 @@ function applyLocale() {
   setText('.atelier__copy .text-link', t('enterCollection'))
 
   setText('.assurance__grid div:nth-child(1) strong', t('secureCheckout'))
+  setText('.assurance__grid div:nth-child(1) p', t('secureCheckoutText'))
   setText('.assurance__grid div:nth-child(2) strong', t('rarity'))
+  setText('.assurance__grid div:nth-child(2) p', t('rarityText'))
   setText('.assurance__grid div:nth-child(3) strong', t('noSize'))
+  setText('.assurance__grid div:nth-child(3) p', t('noSizeText'))
+  setText('.purchase-notes article:nth-child(1) .section-label', t('deliveryLabel'))
+  setText('.purchase-notes article:nth-child(1) h2', t('deliveryTitle'))
+  setText('.purchase-notes article:nth-child(1) p:last-child', t('deliveryText'))
+  setText('.purchase-notes article:nth-child(2) .section-label', t('materialsLabel'))
+  setText('.purchase-notes article:nth-child(2) h2', t('materialsTitle'))
+  setText('.purchase-notes article:nth-child(2) p:last-child', t('materialsText'))
   setText('.social-proof__intro .section-label', t('socialFirst'))
   setText('.social-proof__intro h2', t('followRelease'))
   setText('.social-proof__items p:nth-child(1) span', t('familyOwned'))
@@ -801,7 +901,7 @@ function applyLocale() {
   setText('.cart__header h2', t('cartTitle'))
   setText('.cart__total span', t('total'))
   setText('#checkoutButton', t('checkout'))
-  setText('.footer__inner p', `© 2026 Luardani. ${t('copyright')}`)
+  setText('.footer__inner p', `(c) 2026 Luardani. ${t('copyright')}`)
 }
 
 function updateLanguageLinks() {

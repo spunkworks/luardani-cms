@@ -1,0 +1,12 @@
+{
+  "name": "luardani-storefront",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo \"Static storefront ready\"",
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "stripe": "^22.1.1"
+  }
+}

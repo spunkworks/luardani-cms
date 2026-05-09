@@ -28,6 +28,7 @@ const FALLBACK_PRODUCTS = [
 let products = []
 let cart = JSON.parse(localStorage.getItem('luardani-cart') || '[]')
 let interestLog = JSON.parse(localStorage.getItem('luardani-interest') || '{}')
+let selectedCategoryKey = null
 const SHARE_URL = LOCALE === 'nl' ? 'https://luardani.nl/?ref=friend' : 'https://luardani.com/?ref=friend'
 const SHARE_TEXT = LOCALE === 'nl'
   ? 'Luardani - premium no-size accessoires voor vrouwen. Help kiezen welke kleine batch als volgende komt.'
@@ -68,8 +69,11 @@ const COPY = {
     maison3Title: 'Kleine batches, minder verspilling',
     maison3Text: 'We testen liever vraag, luisteren naar klanten en produceren zorgvuldig dan dat we ongewenste voorraad bouwen.',
     collectionLabel: 'De collectie',
-    collectionTitle: 'No-size essentials',
-    collectionIntro: 'Shop beschikbare stukken direct, of toon interesse in vraaggestuurde items voordat een productieronde opent.',
+    collectionTitle: 'Kies een categorie',
+    collectionIntro: 'Begin met de edit hierboven. Elke categorie opent een rustige productselectie, zodat mobiel browsen overzichtelijk blijft.',
+    chooseCategory: 'Kies een categorie om de producten te bekijken.',
+    selectedPiece: 'stuk in deze categorie',
+    selectedPieces: 'stukken in deze categorie',
     promiseLabel: 'Onze belofte',
     promiseTitle: 'Gemaakt om door te geven.',
     promiseText1: 'Luardani verbindt Marokkaanse familieroots met een clean, moderne manier van dragen. De stukken zijn makkelijk te gebruiken, makkelijk te geven en gemaakt voor dagelijks leven.',
@@ -231,6 +235,7 @@ const PRODUCT_ASSETS = {
 
 const CATEGORY_EDITS = [
   {
+    key: 'bags',
     label: 'Everyday Bags',
     labelNl: 'Tassen voor elke dag',
     text: 'Leather pieces for workdays, dinners, and errands.',
@@ -238,6 +243,7 @@ const CATEGORY_EDITS = [
     image: 'assets/luardani/marrakech-tote.jpg',
   },
   {
+    key: 'silk',
     label: 'Silk Layers',
     labelNl: 'Zijden lagen',
     text: 'Anatolian Silk that dresses up simple outfits.',
@@ -245,6 +251,7 @@ const CATEGORY_EDITS = [
     image: 'assets/luardani/noor-silk-square.jpg',
   },
   {
+    key: 'jewelry',
     label: 'Daily Jewelry',
     labelNl: 'Sieraden voor dagelijks',
     text: 'Warm gold-toned details for every day.',
@@ -252,6 +259,7 @@ const CATEGORY_EDITS = [
     image: 'assets/luardani/amira-hoops.jpg',
   },
   {
+    key: 'gifts',
     label: 'Gifts',
     labelNl: 'Cadeaus',
     text: 'No-size pieces that are easy to give.',
@@ -259,6 +267,7 @@ const CATEGORY_EDITS = [
     image: 'assets/luardani/medina-slipper.jpg',
   },
   {
+    key: 'travel',
     label: 'Travel & Tech',
     labelNl: 'Travel & tech',
     text: 'Organised pieces for movement and daily order.',
@@ -266,6 +275,7 @@ const CATEGORY_EDITS = [
     image: 'assets/luardani/tadelakt-pouch.jpg',
   },
   {
+    key: 'drops',
     label: 'Next Drops',
     labelNl: 'Volgende drops',
     text: 'Concepts customers can help move forward.',
@@ -273,6 +283,15 @@ const CATEGORY_EDITS = [
     image: 'assets/luardani/lalla-ring-set.jpg',
   },
 ]
+
+const CATEGORY_PRODUCT_SLUGS = {
+  bags: ['toscana-handbag', 'riad-mini-bag', 'tadelakt-pouch'],
+  silk: ['silk-scarf', 'kasbah-silk-wrap'],
+  jewelry: ['zayna-cuff', 'amira-hoops', 'lalla-ring-set'],
+  gifts: ['leather-cardholder', 'silk-scarf', 'amira-hoops', 'nomad-key-case'],
+  travel: ['tadelakt-pouch', 'nomad-key-case', 'catania-sunglasses', 'leather-cardholder'],
+  drops: ['toscana-handbag', 'leather-slippers', 'catania-sunglasses', 'kasbah-silk-wrap', 'lalla-ring-set'],
+}
 
 const t = (key) => COPY[LOCALE]?.[key] || key
 const cleanTone = (value = '') => String(value)
@@ -335,6 +354,11 @@ const productTypeLabel = (type = '') => ({
 })[type] || t('noSizeEdit')
 
 const isOnDemand = (product) => product.saleType === 'on-demand'
+const selectedCategory = () => CATEGORY_EDITS.find((category) => category.key === selectedCategoryKey)
+const productsForCategory = (key) => {
+  const slugs = CATEGORY_PRODUCT_SLUGS[key] || []
+  return products.filter((product) => slugs.includes(product.slug))
+}
 
 const productionProgress = (product) => {
   const interest = Number(product.interestCount)
@@ -433,8 +457,6 @@ async function shareProduct(product, messageEl) {
 }
 
 async function loadProducts() {
-  const grid = document.getElementById('productsGrid')
-  const count = document.getElementById('productsCount')
   try {
     const res = await fetch('/api/products?where[status][equals]=published&limit=100&sort=createdAt')
     if (!res.ok) throw new Error('CMS unavailable')
@@ -444,14 +466,47 @@ async function loadProducts() {
     products = FALLBACK_PRODUCTS
   }
 
+  renderProducts()
+}
+
+function renderProducts() {
+  const section = document.getElementById('products')
+  const grid = document.getElementById('productsGrid')
+  const count = document.getElementById('productsCount')
+  const title = document.getElementById('productsTitle')
+  const intro = document.getElementById('productsIntro')
+  const category = selectedCategory()
+
   if (!products.length) {
     grid.innerHTML = `<p class="empty">${LOCALE === 'nl' ? 'De collectie wordt voorbereid.' : 'The collection is being prepared.'}</p>`
     count.textContent = '0 pieces'
     return
   }
 
-  count.textContent = LOCALE === 'nl' ? `${products.length} ${products.length === 1 ? t('piece') : t('pieces')}` : `${products.length} piece${products.length === 1 ? '' : 's'}`
-  grid.innerHTML = products.map((sourceProduct) => {
+  if (!category) {
+    section?.classList.add('products--empty')
+    title.textContent = LOCALE === 'nl' ? t('collectionTitle') : 'Choose a category'
+    intro.textContent = LOCALE === 'nl' ? t('collectionIntro') : 'Start with the edit above. Each category opens a focused product selection, so browsing stays calm on mobile.'
+    count.textContent = ''
+    grid.innerHTML = `<p class="empty">${escapeHTML(LOCALE === 'nl' ? t('chooseCategory') : 'Choose a category to view products.')}</p>`
+    return
+  }
+
+  section?.classList.remove('products--empty')
+  const visibleProducts = productsForCategory(category.key)
+  const categoryLabel = LOCALE === 'nl' ? category.labelNl : category.label
+  title.textContent = categoryLabel
+  intro.textContent = LOCALE === 'nl' ? category.textNl : category.text
+  count.textContent = LOCALE === 'nl'
+    ? `${visibleProducts.length} ${visibleProducts.length === 1 ? t('selectedPiece') : t('selectedPieces')}`
+    : `${visibleProducts.length} piece${visibleProducts.length === 1 ? '' : 's'} in this category`
+
+  if (!visibleProducts.length) {
+    grid.innerHTML = `<p class="empty">${escapeHTML(LOCALE === 'nl' ? 'Deze categorie wordt voorbereid.' : 'This category is being prepared.')}</p>`
+    return
+  }
+
+  grid.innerHTML = visibleProducts.map((sourceProduct) => {
     const product = localProduct(sourceProduct)
     const progress = productionProgress(product)
     const onDemand = isOnDemand(product)
@@ -511,13 +566,22 @@ function renderCategories() {
 
   grid.innerHTML = CATEGORY_EDITS.map((category) => `
     <article class="category-card fade-in">
-      <a href="#products" aria-label="${escapeAttribute(category.label)}">
+      <button type="button" data-category-key="${escapeAttribute(category.key)}" class="${category.key === selectedCategoryKey ? 'active' : ''}" aria-label="${escapeAttribute(category.label)}">
         <img src="${escapeAttribute(category.image)}" alt="${escapeAttribute(category.label)} product edit" loading="lazy">
         <span>${escapeHTML(LOCALE === 'nl' ? category.labelNl : category.label)}</span>
         <p>${escapeHTML(LOCALE === 'nl' ? category.textNl : category.text)}</p>
-      </a>
+      </button>
     </article>
   `).join('')
+
+  grid.querySelectorAll('[data-category-key]').forEach((button) => {
+    button.addEventListener('click', () => {
+      selectedCategoryKey = button.dataset.categoryKey
+      renderCategories()
+      renderProducts()
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  })
 }
 
 function openProductModal(productId, showInterest = false) {

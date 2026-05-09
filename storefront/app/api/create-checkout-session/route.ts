@@ -1,4 +1,4 @@
-const Stripe = require('stripe')
+import Stripe from 'stripe'
 
 const CMS_URL = process.env.PAYLOAD_API_URL || 'https://luardani-cms.vercel.app'
 const ALLOWED_ORIGINS = new Set([
@@ -9,32 +9,31 @@ const ALLOWED_ORIGINS = new Set([
   'http://localhost:3000',
 ])
 
-function normalizeCart(items) {
+function normalizeCart(items: unknown) {
   if (!Array.isArray(items)) return []
   return items
-    .map((item) => ({
-      id: Number(item.id),
-      quantity: Math.max(1, Math.min(Number(item.quantity) || 1, 99)),
-    }))
+    .map((item) => {
+      const entry = item as { id?: unknown; quantity?: unknown }
+      return {
+        id: Number(entry.id),
+        quantity: Math.max(1, Math.min(Number(entry.quantity) || 1, 99)),
+      }
+    })
     .filter((item) => Number.isInteger(item.id))
 }
 
-module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST')
-    return res.status(405).json({ message: 'Method not allowed' })
-  }
-
+export async function POST(request: Request) {
   if (!process.env.STRIPE_SECRET_KEY) {
-    return res.status(503).json({ message: 'Stripe is not configured yet.' })
+    return Response.json({ message: 'Stripe is not configured yet.' }, { status: 503 })
   }
 
-  const cart = normalizeCart(req.body && req.body.items)
+  const body = await request.json().catch(() => ({}))
+  const cart = normalizeCart((body as { items?: unknown }).items)
   if (!cart.length) {
-    return res.status(400).json({ message: 'Cart is empty.' })
+    return Response.json({ message: 'Cart is empty.' }, { status: 400 })
   }
 
-  const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
   try {
     const ids = cart.map((item) => item.id)
@@ -48,8 +47,8 @@ module.exports = async function handler(req, res) {
     const data = await cmsRes.json()
     const products = data.docs || []
 
-    const line_items = cart.map((item) => {
-      const product = products.find((entry) => Number(entry.id) === item.id)
+    const lineItems = cart.map((item) => {
+      const product = products.find((entry: { id: number }) => Number(entry.id) === item.id)
       if (!product) throw new Error('A product in your cart is no longer available.')
       if (product.saleType === 'on-demand') {
         throw new Error(`${product.name} is on-demand. Please express interest instead of checking out.`)
@@ -80,11 +79,11 @@ module.exports = async function handler(req, res) {
       }
     })
 
-    const requestOrigin = req.headers.origin || 'https://luardani.com'
+    const requestOrigin = request.headers.get('origin') || 'https://luardani.com'
     const origin = ALLOWED_ORIGINS.has(requestOrigin) ? requestOrigin : 'https://luardani.com'
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      line_items,
+      line_items: lineItems,
       success_url: `${origin}/success.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/cancel.html`,
       customer_creation: 'always',
@@ -104,8 +103,9 @@ module.exports = async function handler(req, res) {
       },
     })
 
-    return res.status(200).json({ url: session.url })
+    return Response.json({ url: session.url })
   } catch (error) {
-    return res.status(400).json({ message: error.message || 'Checkout failed.' })
+    const message = error instanceof Error ? error.message : 'Checkout failed.'
+    return Response.json({ message }, { status: 400 })
   }
 }

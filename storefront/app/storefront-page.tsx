@@ -128,7 +128,7 @@ export async function StorefrontPage({ slug }: Props) {
       <main>
         <section className="hero" id="hero" aria-label="Luardani">
           <div className="hero__bg">
-            <img src="/assets/luardani/marrakech-tote-lifestyle.jpg" alt="Luardani leather tote used in warm natural daylight" loading="eager" />
+            <img src="/assets/luardani/hero-tote-clear.jpg" alt="Luardani leather tote used in warm natural daylight" loading="eager" />
           </div>
           <div className="hero__overlay"></div>
           <div className="hero__content">

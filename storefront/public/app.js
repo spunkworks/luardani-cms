@@ -308,7 +308,7 @@ const CATEGORY_EDITS = [
     labelNl: 'Volgende productrondes',
     text: 'Concepts customers can help move forward.',
     textNl: 'Concepten die we maken bij voldoende interesse.',
-    image: 'assets/luardani/lalla-ring-set.jpg',
+    image: 'assets/luardani/next-drops-lifestyle.jpg',
   },
 ]
 

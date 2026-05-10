@@ -250,14 +250,14 @@ const PRODUCT_ASSETS = {
   'leather-cardholder': ['assets/luardani/safi-cardholder-lifestyle.jpg', 'assets/luardani/leather-emboss-detail.jpg', 'assets/luardani/safi-cardholder-detail.jpg'],
   'toscana-handbag': ['assets/luardani/marrakech-tote-lifestyle.jpg', 'assets/luardani/leather-emboss-detail.jpg', 'assets/luardani/marrakech-tote-detail.jpg'],
   'silk-scarf': ['assets/luardani/noor-silk-square-lifestyle.jpg', 'assets/luardani/noor-silk-square-detail.jpg'],
-  'leather-slippers': ['assets/luardani/medina-slipper.jpg', 'assets/luardani/medina-slipper-detail.jpg'],
-  'catania-sunglasses': ['assets/luardani/atlas-sunglass.jpg', 'assets/luardani/atlas-sunglass-detail.jpg'],
-  'riad-mini-bag': ['assets/luardani/riad-mini-bag.jpg', 'assets/luardani/riad-mini-bag-detail.jpg'],
-  'tadelakt-pouch': ['assets/luardani/tadelakt-pouch.jpg', 'assets/luardani/tadelakt-pouch-detail.jpg'],
+  'leather-slippers': ['assets/luardani/medina-slipper-lifestyle.jpg', 'assets/luardani/medina-slipper-detail.jpg'],
+  'catania-sunglasses': ['assets/luardani/atlas-sunglass-lifestyle.jpg', 'assets/luardani/atlas-sunglass-detail.jpg'],
+  'riad-mini-bag': ['assets/luardani/riad-mini-bag-lifestyle.jpg', 'assets/luardani/leather-emboss-detail.jpg', 'assets/luardani/riad-mini-bag-detail.jpg'],
+  'tadelakt-pouch': ['assets/luardani/tadelakt-pouch-lifestyle.jpg', 'assets/luardani/tadelakt-pouch-detail.jpg'],
   'zayna-cuff': ['assets/luardani/amira-hoops-lifestyle.jpg', 'assets/luardani/zayna-cuff-detail.jpg'],
   'amira-hoops': ['assets/luardani/amira-hoops-lifestyle.jpg', 'assets/luardani/amira-hoops-detail.jpg'],
   'lalla-ring-set': ['assets/luardani/lalla-ring-set.jpg', 'assets/luardani/lalla-ring-set-detail.jpg'],
-  'kasbah-silk-wrap': ['assets/luardani/kasbah-silk-wrap.jpg', 'assets/luardani/kasbah-silk-wrap-detail.jpg'],
+  'kasbah-silk-wrap': ['assets/luardani/kasbah-silk-wrap-lifestyle.jpg', 'assets/luardani/kasbah-silk-wrap-detail.jpg'],
   'nomad-key-case': ['assets/luardani/nomad-key-case.jpg', 'assets/luardani/nomad-key-case-detail.jpg'],
 }
 
@@ -292,7 +292,7 @@ const CATEGORY_EDITS = [
     labelNl: 'Cadeaus',
     text: 'No-size pieces that are easy to give.',
     textNl: 'No-size accessoires die makkelijk cadeau te geven zijn.',
-    image: 'assets/luardani/medina-slipper.jpg',
+    image: 'assets/luardani/medina-slipper-lifestyle.jpg',
   },
   {
     key: 'travel',
@@ -300,7 +300,7 @@ const CATEGORY_EDITS = [
     labelNl: 'Reis & tech',
     text: 'Organised pieces for movement and daily order.',
     textNl: 'Slimme accessoires voor onderweg, werk en reizen.',
-    image: 'assets/luardani/tadelakt-pouch.jpg',
+    image: 'assets/luardani/tadelakt-pouch-lifestyle.jpg',
   },
   {
     key: 'drops',
@@ -1115,4 +1115,5 @@ if (document.readyState === 'loading') {
 } else {
   initStorefront()
 }
+
 

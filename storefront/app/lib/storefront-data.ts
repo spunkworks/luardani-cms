@@ -30,7 +30,7 @@ export const CATEGORY_EDITS = [
     labelNl: 'Tassen voor elke dag',
     text: 'Leather pieces for workdays, dinners, and errands.',
     textNl: 'Leren tassen en pouches voor werk, diner en dagelijks gebruik.',
-    image: 'assets/luardani/marrakech-tote.jpg',
+    image: 'assets/luardani/marrakech-tote-lifestyle.jpg',
   },
   {
     key: 'silk',
@@ -38,7 +38,7 @@ export const CATEGORY_EDITS = [
     labelNl: 'Zijden lagen',
     text: 'Anatolian Silk that dresses up simple outfits.',
     textNl: 'Anatolische zijde die eenvoudige outfits mooier maakt.',
-    image: 'assets/luardani/noor-silk-square.jpg',
+    image: 'assets/luardani/noor-silk-square-lifestyle.jpg',
   },
   {
     key: 'jewelry',
@@ -46,7 +46,7 @@ export const CATEGORY_EDITS = [
     labelNl: 'Sieraden voor elke dag',
     text: 'Warm gold-toned details for every day.',
     textNl: 'Warme goudkleurige details voor elke dag.',
-    image: 'assets/luardani/amira-hoops.jpg',
+    image: 'assets/luardani/amira-hoops-lifestyle.jpg',
   },
   {
     key: 'gifts',
@@ -116,15 +116,15 @@ export const ROUTE_PRODUCT_SLUGS = Object.fromEntries(
 ) as Record<string, string>
 
 export const PRODUCT_ASSETS: Record<string, string[]> = {
-  'leather-cardholder': ['assets/luardani/safi-cardholder.jpg', 'assets/luardani/safi-cardholder-detail.jpg'],
-  'toscana-handbag': ['assets/luardani/marrakech-tote.jpg', 'assets/luardani/marrakech-tote-detail.jpg'],
-  'silk-scarf': ['assets/luardani/noor-silk-square.jpg', 'assets/luardani/noor-silk-square-detail.jpg'],
+  'leather-cardholder': ['assets/luardani/safi-cardholder-lifestyle.jpg', 'assets/luardani/leather-emboss-detail.jpg', 'assets/luardani/safi-cardholder-detail.jpg'],
+  'toscana-handbag': ['assets/luardani/marrakech-tote-lifestyle.jpg', 'assets/luardani/leather-emboss-detail.jpg', 'assets/luardani/marrakech-tote-detail.jpg'],
+  'silk-scarf': ['assets/luardani/noor-silk-square-lifestyle.jpg', 'assets/luardani/noor-silk-square-detail.jpg'],
   'leather-slippers': ['assets/luardani/medina-slipper.jpg', 'assets/luardani/medina-slipper-detail.jpg'],
   'catania-sunglasses': ['assets/luardani/atlas-sunglass.jpg', 'assets/luardani/atlas-sunglass-detail.jpg'],
   'riad-mini-bag': ['assets/luardani/riad-mini-bag.jpg', 'assets/luardani/riad-mini-bag-detail.jpg'],
   'tadelakt-pouch': ['assets/luardani/tadelakt-pouch.jpg', 'assets/luardani/tadelakt-pouch-detail.jpg'],
-  'zayna-cuff': ['assets/luardani/zayna-cuff.jpg', 'assets/luardani/zayna-cuff-detail.jpg'],
-  'amira-hoops': ['assets/luardani/amira-hoops.jpg', 'assets/luardani/amira-hoops-detail.jpg'],
+  'zayna-cuff': ['assets/luardani/amira-hoops-lifestyle.jpg', 'assets/luardani/zayna-cuff-detail.jpg'],
+  'amira-hoops': ['assets/luardani/amira-hoops-lifestyle.jpg', 'assets/luardani/amira-hoops-detail.jpg'],
   'lalla-ring-set': ['assets/luardani/lalla-ring-set.jpg', 'assets/luardani/lalla-ring-set-detail.jpg'],
   'kasbah-silk-wrap': ['assets/luardani/kasbah-silk-wrap.jpg', 'assets/luardani/kasbah-silk-wrap-detail.jpg'],
   'nomad-key-case': ['assets/luardani/nomad-key-case.jpg', 'assets/luardani/nomad-key-case-detail.jpg'],
@@ -327,3 +327,4 @@ export function pathForProduct(product: Product) {
   const category = categoryForProduct(product)
   return `${pathForCategory(category?.key || 'bags')}/${PRODUCT_ROUTE_SLUGS[product.slug] || product.slug}`
 }
+

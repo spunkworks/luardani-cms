@@ -128,7 +128,7 @@ export async function StorefrontPage({ slug }: Props) {
       <main>
         <section className="hero" id="hero" aria-label="Luardani">
           <div className="hero__bg">
-            <img src="/assets/luardani/hero-atelier.png" alt="Luardani leather bag worn in warm natural daylight" loading="eager" />
+            <img src="/assets/luardani/marrakech-tote-lifestyle.jpg" alt="Luardani leather tote used in warm natural daylight" loading="eager" />
           </div>
           <div className="hero__overlay"></div>
           <div className="hero__content">
@@ -268,7 +268,7 @@ export async function StorefrontPage({ slug }: Props) {
         <section className="atelier" id="philosophy" aria-label="Brand philosophy">
           <div className="container atelier__grid">
             <div className="atelier__image fade-in">
-              <img src="/assets/luardani/safi-cardholder-detail.jpg" alt="Close-up of refined leather grain and stitching" loading="lazy" />
+              <img src="/assets/luardani/leather-emboss-detail.jpg" alt="Close-up of refined leather grain and Luardani blind emboss" loading="lazy" />
             </div>
             <div className="atelier__copy fade-in">
               <p className="section-label">{locale === 'nl' ? 'Onze belofte' : 'Our Promise'}</p>
@@ -421,3 +421,4 @@ export async function StorefrontPage({ slug }: Props) {
     </>
   )
 }
+

@@ -88,13 +88,14 @@ export async function storefrontMetadata(slug?: string[]): Promise<Metadata> {
       description,
       url: `${origin}${path}`,
       siteName: 'Luardani',
-      images: [{ url: `${origin}/assets/luardani/hero-atelier.png`, alt: 'Luardani' }],
+      images: [{ url: `${origin}/assets/luardani/marrakech-tote-lifestyle.jpg`, alt: 'Luardani' }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${origin}/assets/luardani/hero-atelier.png`],
+      images: [`${origin}/assets/luardani/marrakech-tote-lifestyle.jpg`],
     },
   }
 }
+

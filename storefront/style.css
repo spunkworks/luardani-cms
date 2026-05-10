@@ -715,7 +715,7 @@ button,input{font:inherit}
 .product-share,.interest-disclosure{display:grid;gap:12px;margin-top:22px;border-top:1px solid var(--line);padding-top:18px}
 .product-share summary,.interest-disclosure summary{cursor:pointer;list-style:none}
 .product-share summary::-webkit-details-marker,.interest-disclosure summary::-webkit-details-marker{display:none}
-.product-share summary{color:var(--gold2);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase}
+.product-share summary{display:flex;align-items:center;min-height:44px;color:var(--gold2);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase}
 .interest-disclosure>summary{display:flex;align-items:center;justify-content:center;text-align:center;min-height:50px}
 .product-share div{display:flex;flex-wrap:wrap;gap:10px}
 .product-share a{display:inline-flex;align-items:center;justify-content:center;text-align:center}

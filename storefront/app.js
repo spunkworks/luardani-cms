@@ -705,34 +705,37 @@ function openProductModal(productId, showInterest = false, updatePath = true) {
             </div>
           `).join('')}
         </dl>
-        <div class="product-share" aria-label="Share this piece">
-          <p class="section-label">${escapeHTML(t('shareLabel'))}</p>
-          <div>
-            <button class="product-card__details" type="button" data-product-share="${product.id}">${escapeHTML(t('sharePiece'))}</button>
-            <a class="product-card__details" href="https://wa.me/?text=${encodeURIComponent(`I thought you might like ${product.name} from Luardani. ${window.location.origin}${pathForProduct(sourceProduct)}?ref=friend`)}" target="_blank" rel="noopener">WhatsApp</a>
-            <a class="product-card__details" href="https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${window.location.origin}${pathForProduct(sourceProduct)}?ref=friend`)}&media=${encodeURIComponent(productImage(product))}&description=${encodeURIComponent(product.name)}" target="_blank" rel="noopener">Pinterest</a>
-          </div>
-          <p class="share-message" role="status"></p>
-        </div>
         ${onDemand ? `
-          <form class="interest-form" data-interest-form="${product.id}">
-            <label>
-              <span>${escapeHTML(t('emailLabel'))}</span>
-              <input type="email" name="email" placeholder="you@example.com" required>
-            </label>
-            <label>
-              <span>${escapeHTML(t('inquiryNote'))}</span>
-              <textarea name="note" rows="3" placeholder="${escapeAttribute(t('inquiryPlaceholder'))}"></textarea>
-            </label>
-            <button class="product-card__buy" type="submit">${escapeHTML(t('expressInterest'))}</button>
-            <p class="interest-form__message" role="status">${interestLog[product.id] ? escapeHTML(t('inquiryPreview')) : ''}</p>
-          </form>
+          <details class="interest-disclosure">
+            <summary class="product-card__buy">${escapeHTML(t('expressInterest'))}</summary>
+            <form class="interest-form" data-interest-form="${product.id}">
+              <label>
+                <span>${escapeHTML(t('emailLabel'))}</span>
+                <input type="email" name="email" placeholder="you@example.com" required>
+              </label>
+              <label>
+                <span>${escapeHTML(t('inquiryNote'))}</span>
+                <textarea name="note" rows="3" placeholder="${escapeAttribute(t('inquiryPlaceholder'))}"></textarea>
+              </label>
+              <button class="product-card__buy" type="submit">${escapeHTML(t('expressInterest'))}</button>
+              <p class="interest-form__message" role="status">${interestLog[product.id] ? escapeHTML(t('inquiryPreview')) : ''}</p>
+            </form>
+          </details>
         ` : `
         <div class="modal-product__actions">
           <button class="product-card__buy" type="button" data-modal-add="${product.id}" ${product.inventory < 1 ? 'disabled' : ''}>${escapeHTML(t('add'))}</button>
           <button class="product-card__details" type="button" data-modal-close>${escapeHTML(t('close'))}</button>
         </div>
         `}
+        <details class="product-share" aria-label="Share this piece">
+          <summary>${escapeHTML(t('sharePiece'))}</summary>
+          <div>
+            <button class="product-card__details" type="button" data-product-share="${product.id}">${escapeHTML(t('shareLabel'))}</button>
+            <a class="product-card__details" href="https://wa.me/?text=${encodeURIComponent(`I thought you might like ${product.name} from Luardani. ${window.location.origin}${pathForProduct(sourceProduct)}?ref=friend`)}" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="product-card__details" href="https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(`${window.location.origin}${pathForProduct(sourceProduct)}?ref=friend`)}&media=${encodeURIComponent(productImage(product))}&description=${encodeURIComponent(product.name)}" target="_blank" rel="noopener">Pinterest</a>
+          </div>
+          <p class="share-message" role="status"></p>
+        </details>
         ${onDemand ? `<div class="modal-product__actions"><button class="product-card__details" type="button" data-modal-close>${escapeHTML(t('close'))}</button></div>` : ''}
       </div>
     </div>
